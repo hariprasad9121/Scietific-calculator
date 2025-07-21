@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scientific Calculator</title>
+  <style>
+    body {
+      background-color:oldlace;
+      font-family: Arial;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .calculator {
+      background-color: lightcyan;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px gray;
+      width: 300px;
+    }
+
+    #display {
+      width: 100%;
+      height: 40px;
+      font-size: 20px;
+      text-align: right;
+      margin-bottom: 10px;
+      padding: 5px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    button {
+      padding: 15px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background-color: gray;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color:orangered;
+    }
+  </style>
+</head>
+<body>
+   
+  <div class="calculator">
+    <h2 style="color:gray; font-style:italic; font-size:30px"  >Scientific Calculator</h2>
+    <input type="text" id="display" readonly>
+
+    <div class="buttons">
+      <button onclick="scientific('sin(')">sin</button>
+      <button onclick="scientific('cos(')">cos</button>
+      <button onclick="scientific('tan(')">tan</button>
+       <button onclick="clearDisplay()">AC</button>
+
+      <button onclick="scientific('log(')">log</button>
+      <button onclick="scientific('pi')">π</button>
+      <button onclick="scientific('e')">e</button>
+       <button onclick="scientific(')')">)</button>
+
+      <button onclick="scientific('sqrt(')">√</button>
+      <button onclick="scientific('^')">^</button>
+      <button onclick="scientific('%')">%</button>
+      <button onclick="deleteLast()">DEL</button>
+
+      <button onclick="scientific('7')">7</button>
+      <button onclick="scientific('8')">8</button>
+      <button onclick="scientific('9')">9</button>
+      <button onclick="scientific('+')">+</button>
+
+      <button onclick="scientific('4')">4</button>
+      <button onclick="scientific('5')">5</button>
+      <button onclick="scientific('6')">6</button>
+      <button onclick="scientific('-')">-</button>
+
+      <button onclick="scientific('1')">1</button>
+      <button onclick="scientific('2')">2</button>
+      <button onclick="scientific('3')">3</button>
+      <button onclick="scientific('*')">*</button>
+
+      <button onclick="scientific('.')">.</button>
+      <button onclick="scientific('0')">0</button>
+      <button onclick="calculate()">=</button>
+      <button onclick="scientific('/')">/</button>
+    </div>
+  </div>
+
+  <script>
+    function scientific(value) {
+      document.getElementById("display").value += value;
+    }
+
+    function clearDisplay() {
+      document.getElementById("display").value = "";
+    }
+
+    function deleteLast() {
+      let current = document.getElementById("display").value;
+      document.getElementById("display").value = current.slice(0, -1);
+    }
+
+    function toRadians(degree) {
+      return degree * (Math.PI / 180);
+    }
+
+    function parseExpression(value) {
+      value = value.toLowerCase();
+      value = value.replace(/pi/g, Math.PI);
+      value = value.replace(/e/g, Math.E);
+      return value;
+    }
+
+    function calculate() {
+      let input = document.getElementById("display").value;
+      input = parseExpression(input);
+      let result = "Invalid";
+
+      // Trigonometry
+      if (input.startsWith("sin(")) {
+        let x = parseFloat(input.slice(4, -1));
+        result = Math.sin(toRadians(x));
+      } else if (input.startsWith("cos(")) {
+        let x = parseFloat(input.slice(4, -1));
+        result = Math.cos(toRadians(x));
+      } else if (input.startsWith("tan(")) {
+        let x = parseFloat(input.slice(4, -1));
+        result = Math.tan(toRadians(x));
+      }
+
+      // Logarithm
+      else if (input.startsWith("log(")) {
+        let x = parseFloat(input.slice(4, -1));
+        result = Math.log10(x);
+      }
+
+      // Square root
+      else if (input.startsWith("sqrt(")) {
+        let x = parseFloat(input.slice(5, -1));
+        result = Math.sqrt(x);
+      }
+
+      // Basic operations
+      else {
+        if (input.includes("^")) {
+          let parts = input.split("^");
+          result = Math.pow(parseFloat(parts[0]), parseFloat(parts[1]));
+        } else if (input.includes("+")) {
+          let parts = input.split("+");
+          result = parseFloat(parts[0]) + parseFloat(parts[1]);
+        } else if (input.includes("-")) {
+          let parts = input.split("-");
+          result = parseFloat(parts[0]) - parseFloat(parts[1]);
+        } else if (input.includes("*")) {
+          let parts = input.split("*");
+          result = parseFloat(parts[0]) * parseFloat(parts[1]);
+        } else if (input.includes("/")) {
+          let parts = input.split("/");
+          result = parseFloat(parts[0]) / parseFloat(parts[1]);
+        } else if (input.includes("%")) {
+          let parts = input.split("%");
+          result = parseFloat(parts[0]) % parseFloat(parts[1]);
+        }
+      }
+
+      document.getElementById("display").value = result;
+    }
+  </script>
+
+</body>
+</html>
