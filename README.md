@@ -12,3 +12,5 @@ This is a simple **Scientific Calculator** built using HTML, CSS, and JavaScript
 - Responsive and user-friendly design
 
 Author:HariPrasad S
+
+email:example@.com
