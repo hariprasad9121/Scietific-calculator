@@ -10,3 +10,5 @@ This is a simple **Scientific Calculator** built using HTML, CSS, and JavaScript
 - Scientific functions: sin, cos, tan, log, √, π, e, ^
 - Clear (AC) and Delete (DEL) buttons
 - Responsive and user-friendly design
+
+Author:HariPrasad S
